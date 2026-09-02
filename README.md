@@ -1,5 +1,42 @@
 # Welcome to your Expo app 👋
 
+## Build a standalone Android app
+
+This project uses a local native Android build. Expo Go is not supported because the app includes the native OCR module.
+
+Install Android Studio, Android SDK 36, an Android SDK platform-tools package, and a JDK supported by Expo SDK 57. Set `ANDROID_HOME` and make sure `adb` is on your `PATH`.
+
+Install dependencies and generate/update the native project:
+
+```bash
+npm install
+npx expo prebuild --platform android
+```
+
+For an installable development APK:
+
+```bash
+npm run build:android:debug
+npm run install:android:debug
+```
+
+For a release APK, create a private keystore and add `android/keystore.properties` (this file is ignored by git):
+
+```properties
+storeFile=/absolute/path/to/reactocr-upload.jks
+storePassword=your-keystore-password
+keyAlias=reactocr
+keyPassword=your-key-password
+```
+
+Then build the signed artifact:
+
+```bash
+npm run build:android:release
+```
+
+The release APK is at `android/app/build/outputs/apk/release/app-release.apk`. For Google Play, create an Android App Bundle with `./android/gradlew -p android bundleRelease` and upload `android/app/build/outputs/bundle/release/app-release.aab` in Play Console. The Android application ID is `com.jhunt.reactocr`; change it in `app.json` before publishing if needed.
+
 This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
 
 ## Get started
